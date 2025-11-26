@@ -6,7 +6,6 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Keyboard,
   ActivityIndicator,
   RefreshControl,
   Animated,
@@ -173,8 +172,6 @@ export default function Chat({text = ''}) {
             return
         }
 
-        Keyboard.dismiss()
-
         const message = {
             id: Date.now().toString(),
             content: messageText,
@@ -257,8 +254,6 @@ export default function Chat({text = ''}) {
             !iniLoading ? <View style={{flex: 1, justifyContent: "center", alignItems: "center", paddingTop: 50}}>
                 <NotFound text="Повідомлень немає"/>
             </View> : null}
-            refreshing={refreshing}
-            onRefresh={refresh}
             refreshControl={
                 <RefreshControl
                     refreshing={refreshing}

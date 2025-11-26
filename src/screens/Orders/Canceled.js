@@ -89,8 +89,6 @@ export default function CanceledOrdersScreen() {
             ListEmptyComponent={! iniLoading ? 
                 <NotFound text="Нічого не знайдено" css={{ paddingTop: 50 }} /> 
                 : null}
-            refreshing={refreshing}
-            onRefresh={refresh}
             refreshControl={
                 <RefreshControl
                     refreshing={refreshing}

@@ -84,7 +84,7 @@ export default function ReportsScreen() {
             </View>
 
             {loading && <View style={styles.refreshIndicator}>
-                <ActivityIndicator size="small" color={'#EC1220'} />
+                <ActivityIndicator size="small" color={"#EC1220"} />
             </View>}
             
             <View style={[styles.bottom]}>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     },
     refreshIndicator: {
         paddingVertical: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
     },
 })

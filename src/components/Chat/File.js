@@ -7,9 +7,10 @@ import ImageFile from "./Image"
 const { API_URL } = Constants.expoConfig.extra
 
 export default function File({ file }) {
-    const isImage = file?.type?.match(/^image/)
     const [ downloading, setDownloading ] = useState(false)
     
+    const isImage = file?.type?.match(/^image/)
+
     const handleDownload = async () => {
         try {
             setDownloading(true)
@@ -18,10 +19,10 @@ export default function File({ file }) {
             const fileUri = FileSystem.documentDirectory + file.name
 
             await FileSystem.downloadAsync(uri, fileUri)
-            alert('Файл завантажено')
+            alert("Файл завантажено")
 
         } catch (err) {
-            console.error("Download error:", err)
+            console.error(err)
             alert("Помилка при завантаженні")
         } finally {
             setDownloading(false)
@@ -33,7 +34,11 @@ export default function File({ file }) {
     }
 
     return (
-        <TouchableOpacity key={file.path} style={styles.fileBlock} onPress={handleDownload} disabled={downloading}>
+        <TouchableOpacity 
+            key={file.path ?? Date.now()} 
+            style={styles.fileBlock} 
+            onPress={handleDownload} 
+            disabled={downloading}>
             <View style={styles.fileContent}>
                 {downloading 
                     ? <ActivityIndicator color="#EC1220"/> 
@@ -49,15 +54,15 @@ export default function File({ file }) {
 
 const styles = StyleSheet.create({
     fileBlock: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f2f2f2',
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#f2f2f2",
         padding: 10,
         borderRadius: 5,
     },
     fileContent: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        flexDirection: "row",
+        alignItems: "center",
         gap: 8,
     },
     fileIcon: {
@@ -65,6 +70,6 @@ const styles = StyleSheet.create({
     },
     fileName: {
         fontSize: 14,
-        color: '#333',
+        color: "#333",
     },
 })

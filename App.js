@@ -1,25 +1,25 @@
 import { NavigationContainer } from "@react-navigation/native"
 import AppNavigator from "./src/navigation/AppNavigator"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useAuthStore } from "./src/store/useAuthStore"
 import NotificationsService from "./src/services/NotificationsService"
 import EchoService from "./src/services/EchoService"
 import { useNotificationsStore } from "./src/store/useNotificationsStore"
-import { AppState } from "react-native"
+import { AppState, Vibration } from "react-native"
 import { useChatStore } from "./src/store/useChatStore"
 import ChatService from "./src/services/ChatService"
-import { createAudioPlayer } from 'expo-audio'
 import { useOrdersStore } from "./src/store/useOrdersStore"
 import { useProductsStore } from "./src/store/useProductsStore"
 import { usePackagingStore } from "./src/store/usePackagingStore"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-const player = createAudioPlayer(require('./assets/audio/notification.mp3'))
+import { playSound } from "./src/utils/utils"
 
 export default function App() {
   const { isAuthenticated, user, } = useAuthStore()
   const [ appState, setAppState ] = useState(AppState.currentState)
   const { incrementCount, setNew } = useNotificationsStore()
   const { incrementCount: incrementChatCount } = useChatStore()
+  const navRef = useRef(null)
 
   useEffect(() => {
     if (! isAuthenticated) {
@@ -38,8 +38,7 @@ export default function App() {
             clearTimeout(timer)
         }
         timer = setTimeout(() => setNew(null), 5000)
-        player.seekTo(0)
-        player.play()
+        playSound()
       })
       NotificationsService.refreshUnreadCount()
     } else {
@@ -58,6 +57,11 @@ export default function App() {
             return
         }
         incrementChatCount()
+
+        const currentRoute = navRef.current?.getCurrentRoute()
+        if (currentRoute && currentRoute.name != "chat") {
+          Vibration.vibrate(2000)
+        }
       })
       ChatService.refreshUnreadTotal()
     } else {
@@ -85,24 +89,30 @@ export default function App() {
 
   useEffect(() => {
       if (! isAuthenticated) {
-        const authStore = useAuthStore.getState()
-        authStore.reset()
-        const notificationsStore = useNotificationsStore.getState()
-        notificationsStore.reset()
-        const chatStore = useChatStore.getState() 
-        chatStore.reset()
-        const ordersStore = useOrdersStore.getState() 
-        ordersStore.reset()
-        const productsStore = useProductsStore.getState()
-        productsStore.reset()
-        const packagingStore = usePackagingStore.getState()
-        packagingStore.reset()
+        useAuthStore
+          .getState()
+          .reset()
+        useNotificationsStore
+          .getState()
+          .reset()
+        useChatStore
+          .getState()
+          .reset() 
+        useOrdersStore
+          .getState()
+          .reset() 
+        useProductsStore
+          .getState()
+          .reset()
+        usePackagingStore
+          .getState()
+          .reset()
       }
   }, [isAuthenticated])
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
+      <NavigationContainer ref={navRef}>
         <AppNavigator/>
       </NavigationContainer>
     </GestureHandlerRootView>

@@ -73,7 +73,7 @@ export default function AddressInput({ address, setAddress, error, label = 'Ад
                     placeholderTextColor: css[theme].placeholder.color,
                 }}/>
 
-            {error?.length ? <Error text={error}/> : ""}
+            {error?.length ? <Error text={error}/> : null}
         </View>
     )
 }

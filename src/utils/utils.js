@@ -1,3 +1,4 @@
+import { createAudioPlayer, setAudioModeAsync } from "expo-audio"
 import { Linking } from "react-native"
 
 const formatPhone = phone => {
@@ -14,17 +15,17 @@ const formatPhone = phone => {
 
 function formatDate(date, withTime = true) {
     const options = {
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric', 
+        year: "numeric", 
+        month: "long", 
+        day: "numeric", 
     }
 
     if (withTime) {
-        options.hour = '2-digit'
-        options.minute = '2-digit'
+        options.hour = "2-digit"
+        options.minute = "2-digit"
     }
 
-    return new Date(date).toLocaleString('uk-UA', options)
+    return new Date(date).toLocaleString("uk-UA", options)
 }
 
 function formatYMD(date) {
@@ -37,15 +38,28 @@ const callNumber = number => {
 }
 
 function formatPrice(price) {
-  if (typeof price != 'number' || isNaN(price)) {
+  if (typeof price != "number" || isNaN(price)) {
       price = 0
   }
 
-  return new Intl.NumberFormat('uk-UA', {
-      style: 'currency',
-      currency: 'UAH',
-      trailingZeroDisplay: 'stripIfInteger'
+  return new Intl.NumberFormat("uk-UA", {
+      style: "currency",
+      currency: "UAH",
+      trailingZeroDisplay: "stripIfInteger"
   }).format(price)
+}
+
+const player = createAudioPlayer(require("../../assets/audio/notification.mp3"))
+
+const playSound = async () => {
+    await setAudioModeAsync({
+        playsInSilentMode: true,
+        shouldPlayInBackground: true,
+        interruptionModeAndroid: "duckOthers",
+        interruptionMode: "mixWithOthers",
+    })
+    player.seekTo(0)
+    player.play()
 }
 
 export {
@@ -54,4 +68,5 @@ export {
     callNumber,
     formatYMD,
     formatPrice,
+    playSound,
 }

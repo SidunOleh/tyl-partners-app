@@ -25,7 +25,7 @@ export default ({ config }) => {
     splash: {
       image: "./assets/splash-light.png",
       resizeMode: "contain",
-      backgroundColor: "#ffffffff",
+      backgroundColor: "#ffffff",
       dark: {
         image: "./assets/splash-dark.png",
         resizeMode: "contain",
@@ -37,8 +37,6 @@ export default ({ config }) => {
       bundleIdentifier: "biz.tyk-tyk.tyk-tyk-drivers",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
-        NSLocationWhenInUseUsageDescription: "Цей додаток використовує ваше місцезнаходження.",
-        LSApplicationQueriesSchemes: ["waze"],
       },
       config: {
         googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,

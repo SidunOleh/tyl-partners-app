@@ -21,10 +21,10 @@ export default function MainStack() {
     return (
         <Stack.Navigator screenOptions={{
             headerShown: false, 
-            animation: 'fade', 
+            animation: "fade", 
             animationDuration: 200,
         }}>
-            <Stack.Screen name="stop-list" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="stop-list" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Стоп-лист">
                         <StopListScreen {...props}/>
@@ -52,7 +52,7 @@ export default function MainStack() {
                     </MainLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="orders.canceled" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="orders.canceled" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Скасовані">
                         <CanceledOrdersScreen {...props}/>
@@ -66,49 +66,49 @@ export default function MainStack() {
                     </MainLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="notifications" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="notifications" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Сповіщення">
                         <NotificationsScreen {...props}/>
                     </FullScreenLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="call-courier" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="call-courier" options={{animation: "slide_from_right",}}>
                 {props => (
-                    <FullScreenLayout title="Виклик кур'єра">
+                    <FullScreenLayout title="Виклик ку\'єра">
                         <CallCourierScreen {...props}/>
                     </FullScreenLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="info" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="info" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Про заклад">
                         <InfoScreen {...props}/>
                     </FullScreenLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="reports" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="reports" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Звіти">
                         <ReportsScreen {...props}/>
                     </FullScreenLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="packaging" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="packaging" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Пакування">
                         <PackagingScreen {...props}/>
                     </FullScreenLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="categories" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="categories" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Категорії">
                         <CategoriesScreen {...props}/>
                     </FullScreenLayout>
                 )}
             </Stack.Screen>
-            <Stack.Screen name="products" options={{animation: 'slide_from_right',}}>
+            <Stack.Screen name="products" options={{animation: "slide_from_right",}}>
                 {props => (
                     <FullScreenLayout title="Товари">
                         <ProductsScreen {...props}/>

@@ -47,8 +47,14 @@ export default {
             return
         }
 
+        const roomId = user.rooms[0]?.id ?? null
+
+        if (! roomId) {
+            return
+        }
+
         EchoService.connect().then(echo => {
-            echo.leave(`private-App.Models.Partner.${user.id}`)
+            echo.leave(`rooms.${roomId}`)
         })
     },
     async getRooms() {

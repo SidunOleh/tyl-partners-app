@@ -13,6 +13,7 @@ import { useProductsStore } from "./src/store/useProductsStore"
 import { usePackagingStore } from "./src/store/usePackagingStore"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { playSound } from "./src/utils/utils"
+import * as SplashScreen from "expo-splash-screen"
 
 export default function App() {
   const { isAuthenticated, user, } = useAuthStore()
@@ -20,6 +21,11 @@ export default function App() {
   const { incrementCount, setNew } = useNotificationsStore()
   const { incrementCount: incrementChatCount } = useChatStore()
   const navRef = useRef(null)
+
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync()
+    setTimeout(() => SplashScreen.hideAsync(), 1000)
+  }, [])
 
   useEffect(() => {
     if (! isAuthenticated) {

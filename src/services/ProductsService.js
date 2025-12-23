@@ -22,7 +22,7 @@ export default {
     },
     async createProduct(data) {
         try {
-            const res = await api.post('/products', data)
+            const res = await api.post("/products", data)
 
             return {
                 success: true,
@@ -70,7 +70,7 @@ export default {
     },
     async getStopListProducts() {
         try {
-            const res = await api.get('/stop-list/products')
+            const res = await api.get("/stop-list/products")
 
             return {
                 success: true,
@@ -85,7 +85,7 @@ export default {
     },
     async addToStopList(data) {
         try {
-            const res = await api.post('/stop-list/products', data)
+            const res = await api.post("/stop-list/products", data)
 
             return {
                 success: true,
@@ -114,7 +114,7 @@ export default {
     },
     async getCategories() {
         try {
-            const res = await api.get('/categories')
+            const res = await api.get("/categories")
 
             return {
                 success: true,
@@ -129,7 +129,7 @@ export default {
     },
     async createCategory(data) {
         try {
-            const res = await api.post('/categories', data)
+            const res = await api.post("/categories", data)
 
             return {
                 success: true,
@@ -177,7 +177,7 @@ export default {
     },
     async reorderCategories(tree) {
         try {
-            await api.post('/categories/reorder', {tree})
+            await api.post("/categories/reorder", {tree})
 
             return {
                 success: true,

@@ -18,7 +18,7 @@ export default  {
             const echo = 
                 await EchoService.connect()
             notificationCh = 
-                echo.private('App.Models.Partner.' + user.id)
+                echo.private("App.Models.Partner." + user.id)
             notificationCh.notification(data => {
                 callbacks.forEach(callback => {
                     callback(data)
@@ -80,7 +80,7 @@ export default  {
     },
     async readAll() {
         try {
-            await api.post('/notifications/read-all')
+            await api.post("/notifications/read-all")
 
             return {
                 success: true,

@@ -4,19 +4,22 @@ import AuthService from "../../services/AuthService"
 import Btn from "../../components/UI/Btn"
 import Input from "../../components/UI/Input"
 import { formatPhone } from "../../utils/utils"
+import { useThemeStore } from "../../store/useThemeStore"
 
 export default function LoginScreen() {
+    const { theme } = useThemeStore()
     const [ phone, setPhone ] = useState("")
-    const [ phoneError, setPhoneError ] = useState(false)
+    const [ phoneError, setPhoneError ] = useState(null)
     const [ codeSent, setCodeSent ] = useState(false)
     const [ code, setCode] = useState("")
-    const [ codeError, setCodeError ] = useState(false)
+    const [ codeError, setCodeError ] = useState(null)
     const [ loading, setLoading ] = useState(false)
 
     const handlePhoneChange = phone => {
         setPhone(formatPhone(phone))
+
         if (phoneError) {
-            setPhoneError(false)
+            setPhoneError(null)
         }
     }
 
@@ -24,7 +27,8 @@ export default function LoginScreen() {
         setLoading(true)
         const result = await AuthService.sendCode(phone)
         setLoading(false)
-        if (!result.success) {
+
+        if (! result.success) {
             setPhoneError(result.message)
         } else {
             setCodeSent(true)
@@ -33,8 +37,9 @@ export default function LoginScreen() {
 
     const handleCodeChange = code => {
         setCode(code)
+
         if (codeError) {
-            setCodeError(false)
+            setCodeError(null)
         }
     }
 
@@ -58,7 +63,8 @@ export default function LoginScreen() {
                     error={phoneError}
                     keyboardType="phone-pad"
                     maxLength={15}
-                    returnKeyType="done"/> 
+                    returnKeyType="done"
+                    style={{backgroundColor: theme == "dark" ? "#272727" : "#fff"}}/> 
                 : <Input
                     placeholder="Введіть код"
                     value={code}
@@ -66,7 +72,8 @@ export default function LoginScreen() {
                     error={codeError}
                     keyboardType="phone-pad"
                     maxLength={6}
-                    returnKeyType="done"/>}
+                    returnKeyType="done"
+                    style={{backgroundColor: theme == "dark" ? "#272727" : "#fff"}}/>}
 
             {!codeSent 
                 ? <Btn 
@@ -88,9 +95,6 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: "center", 
         padding: 20, 
-    },
-    input: { 
-        marginBottom: 5,
     },
     btn: {
         marginTop: 28,

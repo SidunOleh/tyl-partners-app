@@ -9,8 +9,8 @@ export default function TopBar({ title }) {
     const { theme } = useThemeStore()
      const navigation = useNavigation()
 
-    const logoDark = require('../../../assets/splash-dark.png')
-    const logoLight = require('../../../assets/splash-light.png')
+    const logoDark = require('../../../assets/logo-dark.png')
+    const logoLight = require('../../../assets/logo-light.png')
 
     return (
         <View style={styles.container}>

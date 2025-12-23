@@ -8,8 +8,6 @@ const { API_URL } = Constants.expoConfig.extra
 
 export default function File({ file }) {
     const [ downloading, setDownloading ] = useState(false)
-    
-    const isImage = file?.type?.match(/^image/)
 
     const handleDownload = async () => {
         try {
@@ -29,13 +27,14 @@ export default function File({ file }) {
         }
     }
 
+    const isImage = file?.type?.match(/^image/)
+
     if (isImage) {
-        return <ImageFile file={file} handleDownload={handleDownload} downloading={downloading}/>
+        return <ImageFile file={file}/>
     }
 
     return (
         <TouchableOpacity 
-            key={file.path ?? Date.now()} 
             style={styles.fileBlock} 
             onPress={handleDownload} 
             disabled={downloading}>

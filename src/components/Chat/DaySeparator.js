@@ -6,12 +6,11 @@ import { useThemeStore } from "../../store/useThemeStore"
 export default function DaySeparator({ date }) {
     const { theme } = useThemeStore()
 
-    const formatDate = (dateStr) => {
-        const date = new Date(dateStr)
+    const formatDate = str => {
         const formatted = new Intl.DateTimeFormat('uk-UA', { 
             day: 'numeric',
             month: 'long', 
-        }).format(date)
+        }).format(new Date(str))
 
         return formatted.replace(' о ', '')
     }

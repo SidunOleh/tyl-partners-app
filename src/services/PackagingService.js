@@ -1,4 +1,4 @@
-import api from './api'
+import api from "./api"
 
 export default {
     async get(page) {
@@ -22,7 +22,7 @@ export default {
     },
     async getAll() {
         try {
-            const res = await api.get('/packaging/all')
+            const res = await api.get("/packaging/all")
 
             return {
                 success: true,
@@ -37,7 +37,7 @@ export default {
     },
     async create(data) {
         try {
-            const res = await api.post('/packaging', data)
+            const res = await api.post("/packaging", data)
 
             return {
                 success: true,

@@ -1,4 +1,4 @@
-import api from './api'
+import api from "./api"
 
 export default {
     async getIncomeOrders(page) {
@@ -140,7 +140,7 @@ export default {
     }, 
     async createCourierOrder(data) {
         try {
-            const res = await api.post('/call-courier', data)
+            const res = await api.post("/call-courier", data)
 
             return {
                 success: true,

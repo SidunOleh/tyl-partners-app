@@ -7,12 +7,19 @@ import ProductsService from "../../../services/ProductsService"
 export default function ProductItem({ item, addItem, removeItem, stopList }) {
     const { theme } = useThemeStore()
     const [ inStopList, setInStopList ] = useState(null)
+    const [ loading, setLoading ] = useState(false)
 
     useEffect(() => {
         setInStopList(stopList.find(stopListItem => stopListItem.product.id == item.id))
     }, [stopList])
 
     const change = async value => {
+        if (loading) {
+            return
+        }
+
+        setLoading(true)
+
         if (value) {
             const newItem = {
                 product: item,
@@ -33,6 +40,8 @@ export default function ProductItem({ item, addItem, removeItem, stopList }) {
                 }
             }
         }
+
+        setLoading(false)
     }
 
     return (
@@ -47,6 +56,7 @@ export default function ProductItem({ item, addItem, removeItem, stopList }) {
             </Text>
 
             <Switch 
+                disabled={loading}
                 value={Boolean(inStopList)}
                 onValueChange={change}
                 trackColor={{false: 'rgba(0, 0, 0, 0.23)', true: '#EC1220'}}/>

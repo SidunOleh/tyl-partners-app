@@ -91,7 +91,7 @@ export default function Order({ item, showActions, accept, decline, done }) {
             {showActions ? (<>
                 <View style={[styles.line, {backgroundColor: theme == "dark" ? "#484848" : "#E6E6E6"}]}/>
 
-                {lastStage.stage == 'sent'
+                {lastStage?.stage == 'sent'
                     ? (
                         <>
                         <Btn text="Прийняти" 
@@ -104,7 +104,7 @@ export default function Order({ item, showActions, accept, decline, done }) {
                     )
                     : null}
 
-                {lastStage.stage == 'accepted'
+                {lastStage?.stage == 'accepted'
                     ? (
                         <>
                         <Btn text="Завершити"

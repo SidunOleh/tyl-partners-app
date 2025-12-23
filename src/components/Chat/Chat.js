@@ -51,13 +51,7 @@ export default function Chat({text = ''}) {
         }
 
         setTimeout(() => setRefreshing(true), 50)
-        fetch().then(() => {
-            if (count > 0) {
-                const roomId = user.rooms[0]?.id
-                ChatService.readRoom(roomId)
-                changeCount(0)
-            }
-        }).finally(() => {
+        fetch().finally(() => {
             setIniLoading(false)
             setRefreshing(false)
         })
@@ -107,6 +101,8 @@ export default function Chat({text = ''}) {
             setMessages(res.messages)
             setData(res.messages)
         }
+
+        readRoom()
     }
 
     useFocusEffect(
@@ -127,8 +123,7 @@ export default function Chat({text = ''}) {
                     return updated
                 })
 
-                ChatService.readRoom(user.rooms[0]?.id)
-                changeCount(0)
+                readRoom()
             }
 
             ChatService.listen(callback)
@@ -138,6 +133,16 @@ export default function Chat({text = ''}) {
             }
         }, [])
     )
+
+    const readRoom = () => {
+        if (count == 0) {
+            return
+        }
+
+        changeCount(0)
+
+        ChatService.readRoom(user.rooms[0]?.id)
+    }
 
     const prepareMessagesWithSeparators = messages => {
         const result = []
@@ -196,35 +201,31 @@ export default function Chat({text = ''}) {
         )
 
         if (! res.success) {
-            alert(`Помилка: ${res.message}`)
             setMessages(prev => prev.filter((item) => item.id !== message.id))
+            alert(`Помилка: ${res.message}`)
         }
     }
 
     const selectFiles = async () => {
-        try {
-            const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
-    
-            if (! permission.granted) {
-                return
-            }
-    
-            const result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: false,
-                quality: 1,
-            })
+        const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
-            setSelectedFiles(prev => [
-                ...prev,
-                ...result.assets?.map(file => ({
-                    uri: file.uri,
-                    name: file.fileName,
-                    type: file.mimeType,
-                })) ?? [],])
-        } catch (err) {
-            console.log("Error picking file", err)
+        if (! permission.granted) {
+            return
         }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            quality: 1,
+        })
+
+        setSelectedFiles(prev => [
+            ...prev,
+            ...result.assets?.map(file => ({
+                uri: file.uri,
+                name: file.fileName,
+                type: file.mimeType,
+            })) ?? [],])
     }
 
     const deleteFile = file => {

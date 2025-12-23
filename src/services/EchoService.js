@@ -1,6 +1,6 @@
-import Echo from 'laravel-echo'
-import Pusher from 'pusher-js/react-native'
-import Constants from 'expo-constants'
+import Echo from "laravel-echo"
+import Pusher from "pusher-js/react-native"
+import Constants from "expo-constants"
 import { useAuthStore } from "../store/useAuthStore"
 
 let echo = null
@@ -16,19 +16,19 @@ export default {
         const { API_URL, PUSHER_APP_KEY } = Constants.expoConfig.extra
 
         const pusherClient = new Pusher(PUSHER_APP_KEY, {
-            cluster: 'eu',
+            cluster: "eu",
             forceTLS: true,
-            authEndpoint: API_URL + '/broadcasting/auth',
+            authEndpoint: API_URL + "/broadcasting/auth",
             auth: {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    Accept: 'application/json',
+                    Accept: "application/json",
                 },
             }
         })
 
         echo = new Echo({
-            broadcaster: 'pusher',
+            broadcaster: "pusher",
             client: pusherClient,
         })
 

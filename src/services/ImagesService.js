@@ -4,14 +4,14 @@ export default {
     async upload(file) {
         try {
             const data = new FormData()
-            data.append('image', {
+            data.append("image", {
                 uri: file.uri,
                 name: file.fileName,
                 type: file.mimeType,
             })
             
             const res = await api.post("/images/upload", data, {
-                headers: {'Content-Type': 'multipart/form-data'}
+                headers: {"Content-Type": "multipart/form-data"}
             })
 
             return {

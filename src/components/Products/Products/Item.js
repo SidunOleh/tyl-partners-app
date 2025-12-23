@@ -159,7 +159,7 @@ export default function ProductItem({ item, remove, openUpdateModal, drag, }) {
                 <Btn text="Редагувати"
                     onPress={() => openUpdateModal()}/>
                 <Btn text="Видалити"
-                    onPres={() => setConfirmVisible(true)}
+                    onPress={() => setConfirmVisible(true)}
                     disabled={loading}/>
             </View></>}
         </View>

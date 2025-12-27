@@ -4,6 +4,7 @@ import NotFound from '../../components/UI/NotFound'
 import Notification from '../../components/Notifications/Notification'
 import { useNotificationsStore } from '../../store/useNotificationsStore'
 import NotificationsService from '../../services/NotificationsService'
+import { useThemeStore } from '../../store/useThemeStore'
 
 export default function NotificationsScreen() {
     const [ iniLoading, setIniLoading ] = useState(true)
@@ -13,11 +14,18 @@ export default function NotificationsScreen() {
     const [ page, setPage ] = useState(1)
     const [ totalPages, setTotalPages ] = useState(1)
     const { data: cachedData, setData: setCachedData, changeCount, count, } = useNotificationsStore()
-    const [ tintColor, seTintColor ] = useState("#EC1220fd")
+    const [ tintColor, seTintColor ] = useState(null)
+    const { theme } = useThemeStore()
     
     useEffect(() => {
-        setTimeout(() => seTintColor("#EC1220"), 50)
-    }, [])
+        let color = null
+
+        if (theme == "dark") {
+            color = "#EC1220"
+        }
+
+        setTimeout(() => seTintColor(color), 50)
+    }, [theme])
 
     useEffect(() => {
         if (cachedData.length) {
@@ -91,7 +99,7 @@ export default function NotificationsScreen() {
             style={styles.container}
             ListFooterComponent={
                 loading ? (
-                    <ActivityIndicator style={{padding: 20}} color={'#EC1220'} size="small"/>
+                    <ActivityIndicator style={{padding: 20}} color={tintColor} size="small"/>
                 ) : null
             }
             onEndReached={loadMore}
@@ -103,7 +111,7 @@ export default function NotificationsScreen() {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={refresh}
-                    colors={["#EC1220"]}
+                    colors={[tintColor]}
                     tintColor={tintColor}/>
             }/>
     )

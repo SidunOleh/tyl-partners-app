@@ -75,7 +75,7 @@ export default function MainStack() {
             </Stack.Screen>
             <Stack.Screen name="call-courier" options={{animation: "slide_from_right",}}>
                 {props => (
-                    <FullScreenLayout title="Виклик ку\'єра">
+                    <FullScreenLayout title="Виклик кур'єра">
                         <CallCourierScreen {...props}/>
                     </FullScreenLayout>
                 )}

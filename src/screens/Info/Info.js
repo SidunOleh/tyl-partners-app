@@ -63,7 +63,7 @@ export default function InfoScreen() {
     return (
         <>
         {loadingData && <View style={styles.refreshIndicator}>
-            <ActivityIndicator size="small" color={'#EC1220'} />
+            <ActivityIndicator size="small" color={theme == 'dark' ? '#EC1220' : null} />
         </View>}
 
         <ScrollView 

@@ -6,6 +6,7 @@ import { useOrdersStore } from '../../store/useOrdersStore'
 import OrdersService from '../../services/OrdersService'
 import AcceptModal from '../../components/Orders/Modals/Accept'
 import DeclineModal from '../../components/Orders/Modals/Decline'
+import { useThemeStore } from '../../store/useThemeStore'
 
 export default function IncomeOrdersScreen() {
     const [ data, setData ] = useState([])
@@ -15,15 +16,22 @@ export default function IncomeOrdersScreen() {
     const [ refreshing, setRefreshing ] = useState(false)
     const [ page, setPage ] = useState(1)
     const [ totalPages, setTotalPages ] = useState(1)
-    const [ tintColor, seTintColor ] = useState("#EC1220fd")
     const [ showAcceptModal, setShowAcceptModal ] = useState(false)
     const [ acceptItem, setAcceptItem ] = useState(null)
     const [ showDeclineModal, setShowDeclineModal ] = useState(false)
     const [ declineItem, setDeclineItem, ] = useState(null)
+    const [ tintColor, seTintColor ] = useState(null)
+    const { theme } = useThemeStore()
     
     useEffect(() => {
-        setTimeout(() => seTintColor("#EC1220"), 50)
-    }, [])
+        let color = null
+
+        if (theme == "dark") {
+            color = "#EC1220"
+        }
+
+        setTimeout(() => seTintColor(color), 50)
+    }, [theme])
 
     useEffect(() => {
         if (incomeOrders.length) {
@@ -114,7 +122,7 @@ export default function IncomeOrdersScreen() {
             ItemSeparatorComponent={() => <View style={{ height: 12 }}/>}
             ListFooterComponent={
                 loading
-                ? <ActivityIndicator style={{ padding: 20 }} color={'#EC1220'} size="small"/>
+                ? <ActivityIndicator style={{ padding: 20 }} color={tintColor} size="small"/>
                 : null
             }
             ListEmptyComponent={! iniLoading ? 
@@ -124,7 +132,7 @@ export default function IncomeOrdersScreen() {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={refresh}
-                    colors={["#EC1220"]}
+                    colors={[tintColor]}
                     tintColor={tintColor}/>
             }/>
 

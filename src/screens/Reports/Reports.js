@@ -6,6 +6,7 @@ import { formatYMD } from "../../utils/utils"
 import OrdersService from "../../services/OrdersService"
 import Statistic from "../../components/Reports/Statistic"
 import ProductsList from "../../components/Reports/Products/List"
+import { useThemeStore } from "../../store/useThemeStore"
 
 export default function ReportsScreen() {
     const options = [{
@@ -25,6 +26,7 @@ export default function ReportsScreen() {
     const [ range, setRange ] = useState([null, null])
     const [ data, setData ] = useState(null)
     const [ loading, setLoading ] = useState(false)
+    const { theme } = useThemeStore()
 
     useEffect(() => {
         const start = new Date()
@@ -84,7 +86,7 @@ export default function ReportsScreen() {
             </View>
 
             {loading && <View style={styles.refreshIndicator}>
-                <ActivityIndicator size="small" color={"#EC1220"} />
+                <ActivityIndicator size="small" color={theme == "dark" ? "#EC1220" : null} />
             </View>}
             
             <View style={[styles.bottom]}>

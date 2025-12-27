@@ -4,6 +4,7 @@ import NotFound from '../../UI/NotFound'
 import { useProductsStore } from '../../../store/useProductsStore'
 import ProductsService from '../../../services/ProductsService'
 import ProductItem from './Item'
+import { useThemeStore } from '../../../store/useThemeStore'
 
 export default function ProductsList({ stopList, addItem, removeItem, }) {
     const [ iniLoading, setIniLoading ] = useState(true)
@@ -12,6 +13,7 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
     const [ page, setPage ] = useState(1)
     const [ totalPages, setTotalPages ] = useState(1)
     const { products, setProducts } = useProductsStore()
+    const { theme } = useThemeStore()
 
     useEffect(() => {
         if (products.length) {
@@ -63,7 +65,7 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
             style={styles.container}
             ListFooterComponent={
                 loading ? (
-                    <ActivityIndicator style={{padding: 20}} color={'#EC1220'} size="small"/>
+                    <ActivityIndicator style={{padding: 20}} color={theme == 'dark' ? '#EC1220' : null} size="small"/>
                 ) : null
             }
             onEndReached={loadMore}
@@ -73,7 +75,7 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
             ListEmptyComponent={!iniLoading ? <NotFound text="Товарів не знайдено" css={{paddingTop: 50}}/> : ''}
             ListHeaderComponent={iniLoading && 
                 <View style={styles.refreshIndicator}>
-                    <ActivityIndicator size="small" color={'#EC1220'} />
+                    <ActivityIndicator size="small" color={theme == 'dark' ? '#EC1220' : null} />
                 </View>
             }/>
     )

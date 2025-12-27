@@ -4,6 +4,7 @@ import NotFound from "../UI/NotFound"
 import { useOrdersStore } from "../../store/useOrdersStore"
 import CallCourierItem from "./Item"
 import OrdersService from "../../services/OrdersService"
+import { useThemeStore } from "../../store/useThemeStore"
 
 const CallCourierList = forwardRef((props, ref) => {
     const [ data, setData ] = useState([])
@@ -13,11 +14,18 @@ const CallCourierList = forwardRef((props, ref) => {
     const [ refreshing, setRefreshing ] = useState(false)
     const [ page, setPage ] = useState(1)
     const [ totalPages, setTotalPages ] = useState(1)
-    const [ tintColor, seTintColor ] = useState("#EC1220fd")
+    const [ tintColor, seTintColor ] = useState(null)
+    const { theme } = useThemeStore()
     
     useEffect(() => {
-        setTimeout(() => seTintColor("#EC1220"), 50)
-    }, [])
+        let color = null
+
+        if (theme == "dark") {
+            color = "#EC1220"
+        }
+
+        setTimeout(() => seTintColor(color), 50)
+    }, [theme])
 
     useImperativeHandle(ref, () => ({
         refresh,
@@ -84,7 +92,7 @@ const CallCourierList = forwardRef((props, ref) => {
             ItemSeparatorComponent={() => <View style={{ height: 12 }}/>}
             ListFooterComponent={
                 loading
-                ? <ActivityIndicator style={{ padding: 20 }} color={"#EC1220"} size="small"/>
+                ? <ActivityIndicator style={{ padding: 20 }} color={tintColor} size="small"/>
                 : null
             }
             ListEmptyComponent={! iniLoading ? 
@@ -94,7 +102,7 @@ const CallCourierList = forwardRef((props, ref) => {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={refresh}
-                    colors={["#EC1220"]}
+                    colors={[tintColor]}
                     tintColor={tintColor}/>
             }/>
     )

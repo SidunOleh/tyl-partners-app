@@ -6,19 +6,27 @@ import CategoryItem from "./Item"
 import { useProductsStore } from "../../../store/useProductsStore"
 import ProductsService from "../../../services/ProductsService"
 import CategoryModal from "./Modal"
+import { useThemeStore } from "../../../store/useThemeStore"
 
 const CategoriesList = forwardRef((props, ref) => {
     const { categories, setCategories } = useProductsStore()
     const [ data, setData ] = useState([])
     const [ iniLoading, setIniLoading ] = useState(true)
     const [ refreshing, setRefreshing ] = useState(false)
-    const [ tintColor, setTintColor ] = useState("#EC1220fd")
     const [ openUpdateModal, setOpenUpdateModal ] = useState(false)
     const [ updateItem, setUpdateItem ] = useState(null)
-
+    const [ tintColor, seTintColor ] = useState(null)
+    const { theme } = useThemeStore()
+    
     useEffect(() => {
-        setTimeout(() => setTintColor("#EC1220"), 50)
-    }, [])
+        let color = null
+
+        if (theme == "dark") {
+            color = "#EC1220"
+        }
+
+        setTimeout(() => seTintColor(color), 50)
+    }, [theme])
 
     useImperativeHandle(ref, () => ({
         refresh,
@@ -119,7 +127,7 @@ const CategoriesList = forwardRef((props, ref) => {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={refresh}
-                    colors={["#EC1220"]}
+                    colors={[tintColor]}
                     tintColor={tintColor}/>
             }/>
 

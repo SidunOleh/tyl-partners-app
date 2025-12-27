@@ -39,11 +39,17 @@ export default function Chat({text = ''}) {
     const [ selectedFiles, setSelectedFiles ] = useState([])
     const [ showEmojiPicker, setShowEmojiPicker ] = useState(false)
     const flatListRef = useRef(null)
-    const [ tintColor, seTintColor ] = useState("#EC1220fd")
+    const [ tintColor, seTintColor ] = useState(null)
     
     useEffect(() => {
-        setTimeout(() => seTintColor("#EC1220"), 50)
-    }, [])
+        let color = null
+
+        if (theme == "dark") {
+            color = "#EC1220"
+        }
+
+        setTimeout(() => seTintColor(color), 50)
+    }, [theme])
 
     useEffect(() => {
         if (data.length) {
@@ -250,7 +256,7 @@ export default function Chat({text = ''}) {
             inverted
             onEndReached={loadMore}
             onEndReachedThreshold={0.1}
-            ListFooterComponent={loading ? <ActivityIndicator style={{padding: 20}} color={"#EC1220"} size="small" /> : null}
+            ListFooterComponent={loading ? <ActivityIndicator style={{padding: 20}} color={tintColor} size="small" /> : null}
             ListEmptyComponent={
             !iniLoading ? <View style={{flex: 1, justifyContent: "center", alignItems: "center", paddingTop: 50}}>
                 <NotFound text="Повідомлень немає"/>
@@ -259,7 +265,7 @@ export default function Chat({text = ''}) {
                 <RefreshControl
                     refreshing={refreshing}
                     onRefresh={refresh}
-                    colors={["#EC1220"]}
+                    colors={[tintColor]}
                     tintColor={tintColor}/>
             }/>
 

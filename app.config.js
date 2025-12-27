@@ -16,7 +16,7 @@ export default ({ config }) => {
   return {
     ...config,
     name: "Tyk-Partners",
-    slug: "tyk-tyk-partners",
+    slug: "tyk-partners",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/logo.png",
@@ -34,7 +34,7 @@ export default ({ config }) => {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: "biz.tyk-tyk.tyk-tyk-drivers",
+      bundleIdentifier: "biz.tyk-tyk.tyk-tyk-partners",
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },
@@ -64,7 +64,7 @@ export default ({ config }) => {
       PUSHER_APP_KEY: process.env.PUSHER_APP_KEY,
       GOOGLE_MAPS_KEY: process.env.GOOGLE_MAPS_API_KEY,
       eas: {
-        projectId: "8e60a56b-e619-4f06-b9ce-071a8c681027"
+        projectId: "f176f088-6310-465c-8381-7bc2dd6dc406"
       }
     },
   }

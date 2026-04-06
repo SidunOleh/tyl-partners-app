@@ -6,6 +6,7 @@ const initState = {
   user: null,
   token: null,
   isAuthenticated: false,
+  pushToken: null,
 }
 
 export const useAuthStore = create() (
@@ -23,6 +24,12 @@ export const useAuthStore = create() (
             user: null, 
             token: null,
             isAuthenticated: false,
+        }),
+        setPushToken: pushToken => set({
+            pushToken,
+        }),
+        deletePushToken: () => set({
+            pushToken: null,
         }),
         reset: () => set(initState),
     }),

@@ -1,10 +1,11 @@
 import api from "./api"
 
 export default {
-    async getProducts(page) {
+    async getProducts(page, s = '') {
         try {
            const query = new URLSearchParams({
                 page,
+                s,
             })
 
             const res = await api.get(`/products?${query}`)
@@ -68,9 +69,9 @@ export default {
             }
         }
     },
-    async getStopListProducts() {
+    async getStopListProducts(s) {
         try {
-            const res = await api.get("/stop-list/products")
+            const res = await api.get(`/stop-list/products?s=${s}`)
 
             return {
                 success: true,

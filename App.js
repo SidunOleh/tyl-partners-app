@@ -14,6 +14,8 @@ import { usePackagingStore } from "./src/store/usePackagingStore"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { playSound } from "./src/utils/utils"
 import * as SplashScreen from "expo-splash-screen"
+import * as Notifications from 'expo-notifications'
+import PushNotificationService from "./src/services/PushNotificationService"
 
 export default function App() {
   const { isAuthenticated, user, } = useAuthStore()
@@ -94,26 +96,46 @@ export default function App() {
   }, [appState])
 
   useEffect(() => {
-      if (! isAuthenticated) {
-        useAuthStore
-          .getState()
-          .reset()
-        useNotificationsStore
-          .getState()
-          .reset()
-        useChatStore
-          .getState()
-          .reset() 
-        useOrdersStore
-          .getState()
-          .reset() 
-        useProductsStore
-          .getState()
-          .reset()
-        usePackagingStore
-          .getState()
-          .reset()
+    if (isAuthenticated) {
+      PushNotificationService.getAndStoreToken()
+    } else {
+      PushNotificationService.deleteToken()
+    }
+  }, [isAuthenticated])
+
+  useEffect(() => {
+    const subscription = Notifications.addNotificationResponseReceivedListener(res => {
+      const data = res.notification.request.content.data
+
+      if (data.screen) {
+        navRef.current?.navigate(data.screen)
       }
+    })
+
+    return () => subscription.remove()
+  }, [])
+
+  useEffect(() => {
+    if (! isAuthenticated) {
+      useAuthStore
+        .getState()
+        .reset()
+      useNotificationsStore
+        .getState()
+        .reset()
+      useChatStore
+        .getState()
+        .reset() 
+      useOrdersStore
+        .getState()
+        .reset() 
+      useProductsStore
+        .getState()
+        .reset()
+      usePackagingStore
+        .getState()
+        .reset()
+    }
   }, [isAuthenticated])
 
   return (

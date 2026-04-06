@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "924377772462",
+    "project_id": "tyk-partners-app",
+    "storage_bucket": "tyk-partners-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924377772462:android:eb8b7fcd983d156af6d83f",
+        "android_client_info": {
+          "package_name": "biz.tyk_tyk.tyk_tyk_partners"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIUniwtU40iINAb9HTFZczGUHQpWCVp_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

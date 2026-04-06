@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Btn from "../../UI/Btn"
-import { StyleSheet, } from "react-native"
+import { StyleSheet } from "react-native"
 import CustomModal from "../../UI/Modal"
 import OrdersService from "../../../services/OrdersService"
 import Input from "../../UI/Input"
@@ -25,6 +25,10 @@ export default function AcceptModal({ item, visible, onClose, accepted }) {
         }
     }
 
+    const diffInMinutes = (date1, date2) => {
+        return Math.round((date2 - date1) / (1000 * 60))
+    }
+
     return (
         <CustomModal visible={visible} onClose={onClose}>
             <>
@@ -36,6 +40,11 @@ export default function AcceptModal({ item, visible, onClose, accepted }) {
                 placeholder="Вкажіть час в хвилинах"
                 keyboardType="numeric"
                 returnKeyType="done"/>
+
+            {item?.time ? <Btn
+                css={[{marginTop: 10,}]}
+                text={`Вказати ${diffInMinutes(new Date(), new Date(item?.time))} хвилин`} 
+                onPress={() => setCookingTime(String(diffInMinutes(new Date(), new Date(item?.time))))}/> : ''}
 
             <Btn
                 text="Прийняти" 

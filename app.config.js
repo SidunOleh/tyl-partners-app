@@ -44,6 +44,7 @@ export default ({ config }) => {
     },
     android: {
       package: "biz.tyk_tyk.tyk_tyk_partners",
+      googleServicesFile: "./google-services.json",
       adaptiveIcon: {
         foregroundImage: "./assets/splash-light.png",
         backgroundColor: "#ffffff"

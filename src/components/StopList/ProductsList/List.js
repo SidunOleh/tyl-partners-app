@@ -5,6 +5,7 @@ import { useProductsStore } from '../../../store/useProductsStore'
 import ProductsService from '../../../services/ProductsService'
 import ProductItem from './Item'
 import { useThemeStore } from '../../../store/useThemeStore'
+import Input from '../../UI/Input'
 
 export default function ProductsList({ stopList, addItem, removeItem, }) {
     const [ iniLoading, setIniLoading ] = useState(true)
@@ -14,6 +15,7 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
     const [ totalPages, setTotalPages ] = useState(1)
     const { products, setProducts } = useProductsStore()
     const { theme } = useThemeStore()
+    const [ search, setSearch ] = useState('')
 
     useEffect(() => {
         if (products.length) {
@@ -28,13 +30,13 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
     const loadMore = async () => {
         if (page < totalPages && ! loading) {
             setLoading(true)
-            await fetch(page + 1)
+            await fetch(page + 1, search)
             setLoading(false)
         }
     }
 
-    const fetch = async (pageNumber) => {
-        const res = await ProductsService.getProducts(pageNumber)
+    const fetch = async (pageNumber, s) => {
+        const res = await ProductsService.getProducts(pageNumber, s)
 
         if (res.success) {
             const products = res.products.data ?? []
@@ -53,7 +55,22 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
         }
     }
 
+    const applySeachFilter = async () => {
+        setPage(1)
+        setLoading(true)
+        await fetch(1, search)
+        setLoading(false)
+    }
+
     return (
+        <>
+        <Input
+            style={[{marginHorizontal: 16, marginBottom: -10,}]}
+            placeholder="Пошук"
+            value={search}
+            setValue={setSearch}
+            onSubmitEditing={applySeachFilter}/>
+
         <Animated.FlatList
             data={data}
             renderItem={({ item }) => <ProductItem 
@@ -61,7 +78,7 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
                 addItem={addItem}
                 removeItem={removeItem}
                 stopList={stopList}/>}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item.id.toString()}
             style={styles.container}
             ListFooterComponent={
                 loading ? (
@@ -78,6 +95,7 @@ export default function ProductsList({ stopList, addItem, removeItem, }) {
                     <ActivityIndicator size="small" color={theme == 'dark' ? '#EC1220' : null} />
                 </View>
             }/>
+        </>
     )
 }
 

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import css from "../../styles/css"
-import { formatDate } from "../../utils/utils"
+import { formatDate, formatPrice } from "../../utils/utils"
 import Arrow from "../../icons/Arrow"
 import Chat from "../../icons/Chat"
 import { useState } from "react"
@@ -81,9 +81,15 @@ export default function Order({ item, showActions, accept, decline, done }) {
                 <View style={{gap: 2}}>
                     {item.order_items.map((item, i) => {
                         return (
-                        <Text key={i} style={[styles.value, {color: theme == "dark" ? "#FFFFFF" : "#323232"}]}>
-                            <Text style={{fontWeight: 700}}>{item.name}</Text> x {item.quantity}
-                        </Text>)
+                            <View key={i} style={[{flexDirection: "row", justifyContent: "space-between"}]}>
+                                <Text style={[styles.value, {color: theme == "dark" ? "#FFFFFF" : "#323232",}]}>
+                                    <Text style={[{ fontWeight: 700}]}>{item.name}</Text> x {item.quantity}
+                                </Text>
+                                
+                                <Text style={[styles.value, {color: theme == "dark" ? "#FFFFFF" : "#323232"}]}>
+                                    {formatPrice(item.amount)}
+                                </Text>
+                            </View>)
                     })}
                 </View>) : null}
             </View>
